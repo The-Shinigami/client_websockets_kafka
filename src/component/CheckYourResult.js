@@ -10,6 +10,7 @@ import {getPrediction} from "./../service/ConsumersService"
 const SOCKET_URL = 'http://172.18.0.2:8082/ws-chat/';
 
 function CheckYourResult() {
+    const [index, setIndex] = useState(0)
     const [messages, setMessages] = useState([])
     const [state, setState] = React.useState({
         preg: "",
@@ -21,6 +22,49 @@ function CheckYourResult() {
         pedi: "",
         age: "",
     })
+
+    const simples =[
+        {
+            preg: "6",
+            plas: "148",
+            pres: "72",
+            skin: "35",
+            insu: "0",
+            mass: "33.6",
+            pedi: "0.627",
+            age: "50",
+        },
+        {
+            preg: "1",
+            plas: "85",
+            pres: "66",
+            skin: "29",
+            insu: "0",
+            mass: "26.6",
+            pedi: "0.351",
+            age: "31",
+        },
+        {
+            preg: "8",
+            plas: "183",
+            pres: "64",
+            skin: "0",
+            insu: "0",
+            mass: "23.3",
+            pedi: "0.672",
+            age: "32",
+        },
+        {
+            preg: "1",
+            plas: "89",
+            pres: "66",
+            skin: "29",
+            insu: "0",
+            mass: "28.1",
+            pedi: "0.167",
+            age: "21",
+        },
+    ]
     let onConnected = () => {
         console.log("Connected!!")
     }
@@ -51,6 +95,29 @@ function CheckYourResult() {
     let onSubmit = () =>{
         getPrediction(state);
     }
+    let next = (eve) => {
+
+        setIndex((index) => index+1)
+        if(!(index>=0 && index<simples.length))
+            setIndex(0)
+        if(index>=0 && index<simples.length) {
+            setState(simples[index])
+        }
+
+        eve.preventDefault();
+    }
+    let prev = (eve) => {
+
+        setIndex((index) => index-1)
+        if(!(index>=0 && index<simples.length))
+            setIndex(simples.length-1)
+        if(index>=0 && index<simples.length) {
+        setState(simples[index])}
+
+
+        eve.preventDefault();
+    }
+
    return(
        <div >
            <SockJsClient
@@ -72,6 +139,12 @@ function CheckYourResult() {
                >
                    <div>
 
+                       <button style={{backgroundColor:"white",borderRadius:"20px",padding:"10px"}} onClick={prev}>prev</button>
+                       <span>.........</span>
+                       <button style={{backgroundColor:"white",borderRadius:"20px",padding:"10px"}} onClick={next}>next</button>
+                   </div>
+                   <div>
+
                        <TextField
                            required
                            id="outlined-number"
@@ -81,7 +154,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="preg"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.preg}
 
                        />
                        <TextField
@@ -93,7 +167,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="plas"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.plas}
                        />
                        <TextField
                            required
@@ -104,7 +179,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="pres"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.pres}
                        />
                        <TextField
                            required
@@ -115,7 +191,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="skin"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.skin}
                        />
 
 
@@ -131,7 +208,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="insu"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.insu}
                        />
                        <TextField
                            required
@@ -142,7 +220,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="mass"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.mass}
                        />
                        <TextField
                            required
@@ -153,7 +232,8 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="pedi"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.pedi}
                        />
                        <TextField
                            required
@@ -164,12 +244,14 @@ function CheckYourResult() {
                                shrink: true,
                            }}
                            name="age"
-                           onChange={handleChange}
+                           // onChange={handleChange}
+                           value={state.age}
                        />
                    </div>
                    <div style={{marginBottom:"20px"}}>
                        <Button variant="outlined" onClick={onSubmit}>SUBMIT</Button>
                    </div>
+
 
                </Box>
                Results : {messages.map( m =>
@@ -182,4 +264,5 @@ function CheckYourResult() {
        </div>
    )
 }
+
 export default CheckYourResult;

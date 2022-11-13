@@ -1,16 +1,19 @@
 import SockJsClient from "react-stomp";
 import React, {useEffect, useState} from "react";
 import {getStatistics} from "./../service/ConsumersService"
+import {LinearProgress} from "@mui/material";
 
 
 const SOCKET_URL = 'http://172.18.0.2:8082/ws-chat/';
 
 function Statistics() {
     const [messages, setMessages] = useState([])
+    const [loader, setLoader] = useState(true)
     let onConnected = () => {
         console.log("Connected!!")
     }
     let onMessageReceived = (msg) => {
+        setLoader(false);
         console.log('New Message Received!!', msg);
         var tmpM = msg.payload;
         tmpM = tmpM.replace('[','');
@@ -35,6 +38,7 @@ function Statistics() {
                 onMessage={msg => onMessageReceived(msg)}
                 debug={false}
             />
+            {loader?<LinearProgress color="inherit" />:null}
             <header style={{marginTop:"200px"}}>
 
                 Statistics : {messages.map( m =>

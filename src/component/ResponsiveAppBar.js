@@ -22,6 +22,7 @@ function ResponsiveAppBar() {
         margin: "1rem",
         textDecoration: "none",
         color: 'black',
+        fontWeight:"bolder"
 
     };
 

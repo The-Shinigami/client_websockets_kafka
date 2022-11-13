@@ -31,10 +31,10 @@ function Diabetesdata() {
                 onMessage={msg => onMessageReceived(msg)}
                 debug={false}
             />
-            <div style={{fontSize:"xxx-large"}}>
+            <div style={{fontSize:"xxx-large",marginTop:"10px"}}>
                 {counter}
             </div>
-            <header style={{marginTop:"200px"}}>
+            <header style={{marginTop:"50px"}}>
 
                 Diabetes Data : {messages.map( m =>
                 {
